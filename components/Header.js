@@ -1,21 +1,20 @@
 import { useAuth } from "@/lib/auth"
 import { IconValue as Icon } from '@/components/styles'
-import { arrowLeft, arrowRight, bell, search, command, power, settings } from "react-icons-kit/feather";
+import { arrowLeft, arrowRight, bell, search, command, power, settings, mail, share2, moreHorizontal, chevronsUp } from "react-icons-kit/feather";
 import { useState } from "react";
 import styled from "styled-components";
 import Avatar from "./Avatar";
-import { mail } from "react-icons-kit/feather";
 
 const Header = () => {
     const auth = useAuth();
-    const signOut = () => {
-        auth.signout();
-        setuserBubble(!userBubble);
-    }
     return (
         <header style={{ display: 'flex', alignItems: 'center', padding: '5px 15px', fontSize: 18 }}>
-            <div style={{ flex: 1 }}>
-                <Logo />
+            <Logo />
+            <div style={{ flex: 1, textAlign: 'center' }}>
+                <Icon icon={chevronsUp} />
+                <span style={{ maxWidth: '200px', width: '100%' }}> Chandrayan 2</span>
+                <Icon icon={moreHorizontal} />
+                <Icon icon={share2} />
             </div>
             {
                 auth.loading ?
@@ -24,11 +23,11 @@ const Header = () => {
                         <>
                             <Icon icon={search} />
                             <NotiBubble />
-                            <UserBubble user={auth.user} signout={signOut} />
+                            <UserBubble auth={auth} />
                         </>
                         :
                         <button
-                            onClick={() => auth.signinWithGoogle('/blocks')}
+                            onClick={() => auth.signinWithGoogle()}
                         >sign in </button>}
         </header>
     )
@@ -65,8 +64,15 @@ const BubbleItem = styled.li`
     border-bottom:1px solid #f1f1f1;
 `;
 
-const UserBubble = ({ user, signout }) => {
+const UserBubble = ({ auth }) => {
+    const { user, signout } = auth
     const [userBubble, setuserBubble] = useState(false);
+
+    const signOut = () => {
+        signout();
+        setuserBubble(!userBubble);
+    }
+
     return (
         <div style={{ margin: '0px 10px' }}
             style={{ outline: 'none' }}
@@ -90,36 +96,36 @@ const UserBubble = ({ user, signout }) => {
                             <p>{user.email}</p>
                         </div>
                         <style>{`
-                                                    .info { 
-                                                        padding:0px 5px 
-                                                    }
-                                                    .info p {  
-                                                        margin:0;
-                                                        font-size: 13px;
-                                                        white-space: nowrap;
-                                                        overflow: hidden;
-                                                        text-overflow: ellipsis;
-                                                    }
-                                                `}</style>
+                                .info { 
+                                    padding:0px 5px 
+                                }
+                                .info p {  
+                                    margin:0;
+                                    font-size: 13px;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                }
+                        `}</style>
                     </BubbleItem>
                     <BubbleItem onClick={() => { alert('lol') }}>
                         <Icon style={{ padding: '0px 3px' }} icon={settings} /> Settings
-                                            </BubbleItem>
+                    </BubbleItem>
                     <BubbleItem >
                         <Icon style={{ padding: '0px 3px ' }} icon={command} /> Keyboard Shortcuts
-                                            </BubbleItem>
+                    </BubbleItem>
+                    <BubbleItem >
+                        <Icon style={{ padding: '0px 3px ' }} icon={mail} /> Contact Us
+                    </BubbleItem>
+                    <BubbleItem onClick={signOut}>
+                        <Icon style={{ padding: '0px 3px ' }} icon={power} />Logout
+                    </BubbleItem>
                     <BubbleItem>
                         <div className="info">
                             <p>sample</p>
                             <p>test</p>
                         </div>
                     </BubbleItem>
-                    <BubbleItem >
-                        <Icon style={{ padding: '0px 3px ' }} icon={mail} /> Contact Us
-                                            </BubbleItem>
-                    <BubbleItem onClick={signout}>
-                        <Icon style={{ padding: '0px 3px ' }} icon={power} />Logout
-                                            </BubbleItem>
                 </BubbleWrapper>
             }
         </div>
