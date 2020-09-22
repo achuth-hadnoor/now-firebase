@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background:#f8f8f8;
+    background:${props=>props.theme.background.primary};
     font-family:sans-serif;
   }
   /* sc-component-id: sc-keyframes-bcCCNc */
@@ -42,25 +42,50 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const theme = {
-    colors: {
-        primary: '#121212',
-        secondary: '#f9f9f9'
+    light: {
+        background: {
+            primary: '#f8f8f8',
+            secondary: '#eee',
+            tint: '#f9f9f9'
+        },
+        colors: {
+            primary: '#121212',
+            secondary: '#f9f9f9'
+        },
+        font: {
+            x: '13px',
+            xx: '16px',
+            xxx: '18px',
+            xxxx: '24px',
+            xxxxx: '36px',
+            xxxxxx: '42px'
+        },
     },
-    font:{
-        x :'13px',
-        xx :'16px',
-        xxx : '18px',
-        xxxx:'24px',
-        xxxxx:'36px',
-        xxxxxx:'42px'
+    dark: {
+        background: {
+            primary: '#121212',
+            secondary: '#333'
+        },
+        colors: {
+            primary: '#121212',
+            secondary: '#f9f9f9'
+        },
+        font: {
+            x: '13px',
+            xx: '16px',
+            xxx: '18px',
+            xxxx: '24px',
+            xxxxx: '36px',
+            xxxxxx: '42px'
+        },
     }
 }
 
 export default function Theme({ children }) {
     return (
         <>
+            <ThemeProvider theme={theme.light}>
             <GlobalStyle />
-            <ThemeProvider theme={theme}>
                 {children}
             </ThemeProvider>
         </>

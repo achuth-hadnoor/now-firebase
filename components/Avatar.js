@@ -1,9 +1,20 @@
 import styled from "styled-components";
 
-const Avatar = ({src,name,onClick})=>(
+const Avatar = (props)=>(
     <>
         {
-            src ? <Img src={src} title={name} onClick={onClick}/> : <div onClick={onClick} style={{ cursor:'pointer'}}>{name.substring(1,2)}</div>
+            props.src ?
+            <div
+                style={{outline:'none'}}
+               {...props}
+            >
+                <Img src={props.src} 
+                   title={props.name} 
+                   /> 
+            </div>
+            : <div  
+               {...props}
+                  style={{ cursor:'pointer'}}>{props.name.substring(1,2)}</div>
         }
     </>
 ) 
