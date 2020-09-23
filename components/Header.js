@@ -4,15 +4,24 @@ import { arrowLeft, arrowRight, bell, search, command, power, settings, mail, sh
 import { useState } from "react";
 import styled from "styled-components";
 import Avatar from "./Avatar";
+import { firestore, getSlate } from "@/lib/db";
 
 const Header = () => {
+    const [slate,setSlate] = useState({});
     const auth = useAuth();
+        auth.user && firestore.collection('slate').onSnapshot(snap=>{
+            snap.docs.map((doc)=>{ 
+                if(doc.id === auth.user.slate){
+                    setSlate(doc.data())
+                }
+            });            
+        }) ; 
     return (
         <header style={{ display: 'flex', alignItems: 'center', padding: '5px 15px', fontSize: 18 }}>
             <Logo />
             <div style={{ flex: 1, textAlign: 'center' }}>
                 <Icon icon={chevronsUp} />
-                <span style={{ maxWidth: '200px', width: '100%' }}> Chandrayan 2</span>
+    <span style={{ maxWidth: '200px', width: '100%' }}>{slate?.name}</span>
                 <Icon icon={moreHorizontal} />
                 <Icon icon={share2} />
             </div>

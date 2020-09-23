@@ -1,12 +1,12 @@
+import useSWR from 'swr'
 import {useAuth} from '../lib/auth'
 import Header from '@/components/Header';
-export default function Home() {
-    const auth = useAuth();
+export default function Home() { 
   return (
       <>
       <Header/>
       <div>
-          home
+          
       </div>
       </>
   )
