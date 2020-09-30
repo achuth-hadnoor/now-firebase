@@ -10,11 +10,12 @@ const Avatar = (props)=>(
             >
                 <Img src={props.src} 
                    title={props.name} 
+                   title={props.name}
                    /> 
             </div>
             : <div  
                {...props}
-                  style={{ cursor:'pointer'}}>{props.name.substring(1,2)}</div>
+                  style={{ cursor:'pointer'}}>{props.name?.substring(1,2)}</div>
         }
     </>
 ) 
