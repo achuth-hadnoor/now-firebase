@@ -1,6 +1,7 @@
 import { AuthProvider } from '@/lib/auth.js'
 import ThemeProvider from '@/utils/theme'
 import {Fuego,FuegoProvider} from '@nandorojo/swr-firestore'
+import Page from 'layouts/page'
 
 
 const firebaseConfig  = {
@@ -20,7 +21,9 @@ export default function App({ Component, pageProps }) {
     <FuegoProvider  fuego={fuego}> 
         <AuthProvider>
             <ThemeProvider>
-                <Component {...pageProps} /> 
+                <Page>
+                    <Component {...pageProps} /> 
+                </Page>
             </ThemeProvider>
         </AuthProvider>
     </FuegoProvider>
