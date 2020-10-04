@@ -1,16 +1,11 @@
-
-import ThemeProvider from '@/utils/theme'
-import Page from 'layouts/page'
-import FeugoWrapper from 'contexts/feugo'
 import { AuthProvider } from '@/lib/auth'
+import FeugoWrapper from 'contexts/feugo'
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {  
   return (
     <FeugoWrapper> 
-        <AuthProvider> 
-                <Page>
-                    <Component {...pageProps} /> 
-                </Page> 
+        <AuthProvider>  
+            <Component {...pageProps} />  
         </AuthProvider>
     </FeugoWrapper>
   )
@@ -19,10 +14,7 @@ export default function App({ Component, pageProps }) {
 /*
     - firebaseWrapper
         - authwrapper
-            -   themeWrapper
-        -slateWrapper
-            - Header
-            - sections
-                -blocks
+            -   themeWrapper 
+        -Pages
 
 */ 
