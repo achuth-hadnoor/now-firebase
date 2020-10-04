@@ -81,10 +81,10 @@ const theme = {
     }
 }
 
-export default function Theme({ children }) {
+export default function Theme({ children, darkmode}) {
     return (
         <>
-            <ThemeProvider theme={theme.light}>
+            <ThemeProvider theme={darkmode ? theme.dark : theme.light}>
             <GlobalStyle />
                 {children}
             </ThemeProvider>
