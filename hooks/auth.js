@@ -1,17 +1,41 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import Router from 'next/router';
 import cookie from 'js-cookie';
-  
+
 import { fuego } from '@nandorojo/swr-firestore';
 import { getUser } from 'util/db';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
 const authContext = createContext();
+const theme = {
+    dark: {
+        background: '#121212',
+        color: '#f8f8f8'
+    }
+}
+const GlobalStyles = createGlobalStyle`
+   body,html, #__next{
+        margin:0;
+        padding:0;
+        background:${props=>props.theme.background};
+        color:${props=>props.theme.color}; 
+        height:100vh;
+        width:100vw;
+    }
 
+`
 export function AuthProvider({ children }) {
     const auth = useProvideAuth();
-    return <authContext.Provider value={auth}>{
-        auth.loading ? <div>loading...</div> : children
-    }</authContext.Provider>;
+    return (
+    <authContext.Provider value={auth}>{
+        auth.loading ? <div>loading...</div> : <>
+            <ThemeProvider theme={theme.dark}>
+                <GlobalStyles/>
+                {children}
+            </ThemeProvider>
+        </>
+    }</authContext.Provider>
+    );
 }
 
 export const useAuth = () => {
@@ -27,7 +51,7 @@ function useProvideAuth() {
             let user = await formatUser(rawUser);
             const { token, ...userWithoutToken } = user;
             getUser(user.uid, userWithoutToken);
-            setUser(user); 
+            setUser(user);
             cookie.set('slate-auth', true, {
                 expires: 1
             });
@@ -36,11 +60,11 @@ function useProvideAuth() {
             return user;
         } else {
             setUser(false);
-            cookie.remove('slate-auth'); 
+            cookie.remove('slate-auth');
             setLoading(false);
             return false;
         }
-    }; 
+    };
 
     const signinWithGoogle = (redirect) => {
         setLoading(true);
@@ -48,15 +72,18 @@ function useProvideAuth() {
             .auth()
             .signInWithPopup(new fuego.auth.GoogleAuthProvider())
             .then((response) => {
-                handleUser(response.user); 
+                handleUser(response.user);
                 if (redirect) {
                     Router.push(redirect);
                 }
+            })
+            .catch(e => {
+                setLoading(false)
             });
     };
 
     const signout = () => {
-        Router.push('/login'); 
+        Router.push('/login');
         return fuego
             .auth()
             .signOut()
@@ -64,13 +91,13 @@ function useProvideAuth() {
     };
 
     useEffect(() => {
-        const unsubscribe = fuego.auth().onIdTokenChanged(handleUser); 
+        const unsubscribe = fuego.auth().onIdTokenChanged(handleUser);
         return () => unsubscribe();
     }, []);
 
     return {
         user,
-        loading, 
+        loading,
         signinWithGoogle,
         signout
     };

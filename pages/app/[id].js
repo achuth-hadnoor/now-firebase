@@ -4,6 +4,7 @@ const Slate = ({id})=>{
     const {signout} = useAuth()
     return (
         <>
+        <button>new Salte</button>
          {id} 
          <button onClick={()=>{signout()}}>Sign Out</button>
         </>

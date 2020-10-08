@@ -11,7 +11,8 @@ export default function Home() {
         }
     }, [])
     return (
-        <>
+        <>{
+            auth.user ? <>
             welcome to slate
             {
                 auth.user ? <> <button onClick={() => {
@@ -22,6 +23,11 @@ export default function Home() {
                         auth.signinWithGoogle()
                     }}>signin</button>
             }
+            </>
+            :
+            <div></div>
+        }
+            
         </>
     )
-} 
+}  
