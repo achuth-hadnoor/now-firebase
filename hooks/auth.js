@@ -48,14 +48,13 @@ function useProvideAuth() {
 
     const handleUser = async (rawUser) => {
         if (rawUser) {
-            let user = await formatUser(rawUser);
-            const { token, ...userWithoutToken } = user;
-            getUser(user.uid, userWithoutToken);
+            let {uid,...userWithoutToken} = rawUser;
+            let user = await getUser(uid, userWithoutToken); 
             setUser(user);
             cookie.set('slate-auth', true, {
                 expires: 1
             });
-            // Router.replace('app/'+ user.slate)
+            Router.replace(user.slate ? `app/slate/${user.slate}` : '/app/new');
             setLoading(false);
             return user;
         } else {
@@ -91,10 +90,14 @@ function useProvideAuth() {
     };
 
     const updateUser = async (newUser)=>{
-        return await fuego.db.doc(`users/${user.uid}`).update({
+        let _user = {
             ...newUser,
             updatedAt: new Date().toISOString(),
-        })
+        }
+        setUser(_user) 
+        await fuego.db.doc(`users/${user.uid}`).update(_user)
+        Router.replace(`app/slate/${user.slate}`)
+        return 
     }
 
     useEffect(() => {
@@ -110,24 +113,3 @@ function useProvideAuth() {
         updateUser
     };
 }
-
-const getStripeRole = async () => {
-    await fuego.auth().currentUser.getIdToken(true);
-    const decodedToken = await fuego.auth().currentUser.getIdTokenResult();
-
-    return decodedToken.claims.stripeRole || 'free';
-};
-
-const formatUser = async (user) => {
-    return {
-        uid: user.uid,
-        email: user.email,
-        name: user.displayName,
-        token: user.xa,
-        provider: user.providerData[0].providerId,
-        photoUrl: user.photoURL,
-        darkmode: false,
-        stripeRole: await getStripeRole(),
-        slate: 'dailyDesk'
-    };
-};

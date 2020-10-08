@@ -3,9 +3,9 @@ import Router from 'next/router';
 import { useEffect } from "react";
 export default function Home() {
     const auth = useAuth();
-    useEffect(() => {
+    useEffect(() => { 
         if (auth.user) {
-            Router.replace(`app/${auth.user.slate}`);
+            Router.replace(`app/slate/${auth.user.slate}`);
         }
         return () => {
         }

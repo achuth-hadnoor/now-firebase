@@ -12,10 +12,14 @@ export default function New() {
     let [val, setVal] = useState(''); 
     const auth = useAuth();
     const submit = async (e) => {
-        e.preventDefault(); 
-        const id = await CreateSlate(auth.user,val);
-        auth.user.id = id;
-        auth.updateUser(auth.user)
+        e.preventDefault();  
+        CreateSlate(auth.user,val).then(async (id)=>{
+            auth.user.slate  = id; 
+            await auth.updateUser(auth.user); 
+        });
+        // const id = await CreateSlate(auth.user,val);
+        // auth.user.id = id;
+        // auth.updateUser(auth.user)
     }
     return (
         <FormWrapper>
