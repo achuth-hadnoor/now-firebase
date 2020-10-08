@@ -90,6 +90,13 @@ function useProvideAuth() {
             .then(() => handleUser(false));
     };
 
+    const updateUser = async (newUser)=>{
+        return await fuego.db(`users/${user.uid}`).update({
+            ...newUser,
+            updatedAt: new Date().toISOString(),
+        })
+    }
+
     useEffect(() => {
         const unsubscribe = fuego.auth().onIdTokenChanged(handleUser);
         return () => unsubscribe();
@@ -99,7 +106,8 @@ function useProvideAuth() {
         user,
         loading,
         signinWithGoogle,
-        signout
+        signout,
+        updateUser
     };
 }
 

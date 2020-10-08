@@ -1,0 +1,10 @@
+Picked up JAVA_TOOL_OPTIONS: -Xmx2254m
+API endpoint: http://localhost:3001
+If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+
+   export FIRESTORE_EMULATOR_HOST=localhost:3001
+
+Dev App Server is now running.
+
+*** shutting down gRPC server since JVM is shutting down
+*** server shut down
