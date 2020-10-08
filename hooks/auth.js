@@ -91,7 +91,7 @@ function useProvideAuth() {
     };
 
     const updateUser = async (newUser)=>{
-        return await fuego.db(`users/${user.uid}`).update({
+        return await fuego.db.doc(`users/${user.uid}`).update({
             ...newUser,
             updatedAt: new Date().toISOString(),
         })

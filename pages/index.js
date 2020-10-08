@@ -10,9 +10,8 @@ export default function Home() {
         return () => {
         }
     }, [])
-    return (
-        <>{
-            auth.user ? <>
+    return ( 
+        <>  
                 welcome to slate
                 {
                     auth.user ? <> <button onClick={() => {
@@ -22,12 +21,7 @@ export default function Home() {
                         <button onClick={() => {
                             auth.signinWithGoogle()
                         }}>signin</button>
-                }
-            </>
-                :
-                <div>no user found</div>
-        }
-
+                }  
         </>
     )
 }  
