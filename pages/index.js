@@ -1,27 +1,24 @@
-import { useAuth } from "hooks/auth"
-import Router from 'next/router';
 import { useEffect } from "react";
+import Router from 'next/router';
+import Link from 'next/link'
+import { useAuth } from "hooks/auth"
+
 export default function Home() {
     const auth = useAuth();
-    useEffect(() => { 
+    useEffect(() => {
         if (auth.user) {
             Router.replace(`app/slate/${auth.user.slate}`);
         }
         return () => {
         }
     }, [])
-    return ( 
-        <>  
-                welcome to slate
-                {
-                    auth.user ? <> <button onClick={() => {
-                        auth.signout();
-                    }} >Sign Out</button>
-                    </> :
-                        <button onClick={() => {
-                            auth.signinWithGoogle()
-                        }}>signin</button>
-                }  
+    return (
+        <>
+            welcome to slate <Link href="/app/new">
+                <a>
+                    Login
+               </a>
+            </Link>
         </>
     )
 }  
