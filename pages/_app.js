@@ -1,21 +1,16 @@
-import React from 'react'
-import 'firebase/firestore'
-import 'firebase/auth'
-import { Fuego, FuegoProvider } from '@nandorojo/swr-firestore'
+import FeugoWrapper from "hooks/feugo";
+import { AuthProvider } from "hooks/auth";
 
-const firebaseConfig = {
-  // put yours here
+export default function App({ Component, pageProps }) {
+    return (
+        <FeugoWrapper>
+            <AuthProvider>
+                <Component {...pageProps} />
+            </AuthProvider>
+        </FeugoWrapper>
+    )
 }
 
-const fuego = new Fuego(firebaseConfig)
-
-export default function App() {
-  return (
-    <FuegoProvider fuego={fuego}>
-      <YourAppHere />
-    </FuegoProvider>
-  )
-}
 /*
     - firebaseWrapper
         - authwrapper

@@ -1,7 +1,11 @@
+import { useAuth } from "hooks/auth";
+
 const Slate = ({id})=>{
+    const {signout} = useAuth()
     return (
         <>
-         {id}
+         {id} 
+         <button onClick={()=>{signout()}}>Sign Out</button>
         </>
     )
 }
