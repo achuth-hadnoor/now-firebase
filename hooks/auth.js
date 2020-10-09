@@ -4,7 +4,7 @@ import cookie from 'js-cookie';
 
 import { fuego } from '@nandorojo/swr-firestore';
 import { getUser } from 'util/db';
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 
 const authContext = createContext();
 const theme = {
@@ -21,9 +21,42 @@ const GlobalStyles = createGlobalStyle`
         color:${props=>props.theme.color}; 
         height:100vh;
         width:100vw;
-    }
-
+        box-sizing: border-box;
+        font-family:sans-serif;
+    } 
+  /* sc-component-id: sc-keyframes-bcCCNc */
+    @keyframes bcCCNc {
+        0% {
+        opacity: 0;
+        }
+        100% {
+        opacity: 1;
+        }
+    } 
+    /* sc-component-id: sc-keyframes-iuhkkK */
+    @keyframes iuhkkK {
+        from {
+        width: 0px;
+        opacity: 0;
+        }
+        to {
+        width: 200px;
+        opacity: 1;
+        }
+    } 
+    /* sc-component-id: sc-keyframes-gztygP */
+    @keyframes gztygP {
+        from {
+            transform: translateY(15px); 
+        opacity: 0;
+        }
+        to { 
+        transform: translateY(0);
+        opacity: 1;
+        }
+    } 
 `
+
 export function AuthProvider({ children }) {
     const auth = useProvideAuth();
     return (
@@ -31,12 +64,21 @@ export function AuthProvider({ children }) {
         auth.loading ? <div>loading...</div> : <>
             <ThemeProvider theme={theme.dark}>
                 <GlobalStyles/>
-                {children}
+                <LayoutWrapper>
+                    {children}
+                </LayoutWrapper>
             </ThemeProvider>
         </>
     }</authContext.Provider>
     );
 }
+const LayoutWrapper = styled.div`
+    max-width:1200px;
+    width:100%;
+    margin:auto;
+    opacity:0;
+    animation: gztygP 0.16s 0.3s ease-in-out forwards;
+`;
 
 export const useAuth = () => {
     return useContext(authContext);
@@ -53,8 +95,10 @@ function useProvideAuth() {
             setUser(user);
             cookie.set('slate-auth', true, {
                 expires: 1
-            });
-            Router.replace(user.slate ? `app/slate/${user.slate}` : '/app/new');
+            }); 
+            // if(Router.pathname !== '/app/new' && Router.pathname !== '/app/slate/'  ){
+            //     Router.push(user.slate ? `app/slate/${user.slate}` : '/app/new');
+            // }
             setLoading(false);
             return user;
         } else {

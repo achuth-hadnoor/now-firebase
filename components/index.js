@@ -1,4 +1,4 @@
-
+import Header from './Header'
 const Logo = () => (
     <svg width={83} height={30} style={{ padding: 10 }} viewBox="0 0 83 30" fill="none" >
         <path
@@ -9,5 +9,6 @@ const Logo = () => (
 )
 
 export {
-    Logo
+    Logo,
+    Header
 }
