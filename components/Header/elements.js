@@ -1,18 +1,19 @@
-import styled from "styled-components/macro";
+import styled from "styled-components";
 
 export const HeaderWrapper = styled.header`
-    display:flex;
+  /* @media (max-width: 768px) {
+    flex-direction: column;
+  } */
     align-items:center;
-    padding:10px 15px ;
-    font-size:18px;
+    display:flex;
+    margin:0px 10px ;
+    font-size:18px; 
 `
 export const BubbleWrapper = styled.ul`
     list-style:none;
-    position: absolute;
-    top: 50px;  
+    position: absolute; 
     background: #fff;
-    color:#444;
-    right: 10px;
+    color:#444; 
     box-shadow: 0px 0px 10px 5px rgba(0,0,0,.05);
     border-radius: 10px;
     opacity:0;
@@ -34,3 +35,7 @@ export const BubbleItem = styled.li`
     }
     border-bottom:1px solid #f1f1f1;
 `;
+export const Options = styled.div`
+    display:flex;
+    align-items:center;
+`

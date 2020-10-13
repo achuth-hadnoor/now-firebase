@@ -1,13 +1,46 @@
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background:${props=>props.theme.background.primary};
-    font-family:sans-serif;
-  }
+       html,
+        body,#__next {
+          padding: 0;
+          margin: 0;
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
+          background:${(props) => props.theme.background.primary};
+          color:${(props) => props.theme.colors.primary};
+          scroll-behavior: smooth;
+          height:100vh;
+          width:100vw;
+        } 
+        * {
+          box-sizing: border-box;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 14px;
+            height: 14px
+        }
+        ::-webkit-scrollbar-track {
+            background-color: transparent
+        }
+        ::-webkit-scrollbar-thumb,::-webkit-scrollbar-track {
+            border: 4px solid transparent;
+            background-clip: padding-box;
+            border-radius: 8px
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: ${(props) => props.theme.accent}
+        }
+        ::-webkit-scrollbar-button {
+            display: none;
+            width: 0;
+            height: 0
+        }
+        ::-webkit-scrollbar-corner {
+            background-color: transparent
+        }
   /* sc-component-id: sc-keyframes-bcCCNc */
     @keyframes bcCCNc {
         0% {
@@ -46,7 +79,7 @@ const theme = {
         background: {
             primary: '#f8f8f8',
             secondary: '#eee',
-            tint: '#f9f9f9'
+            accent: '#f9f9f9'
         },
         colors: {
             primary: '#121212',
@@ -64,10 +97,11 @@ const theme = {
     dark: {
         background: {
             primary: '#121212',
-            secondary: '#333'
+            secondary: '#333',
+            accent:'indigo'
         },
         colors: {
-            primary: '#121212',
+            primary: '#f8f8f8',
             secondary: '#f9f9f9'
         },
         font: {
@@ -84,7 +118,7 @@ const theme = {
 export default function Theme({ children, darkmode}) {
     return (
         <>
-            <ThemeProvider theme={darkmode ? theme.dark : theme.light}>
+            <ThemeProvider theme={theme.dark}>
             <GlobalStyle />
                 {children}
             </ThemeProvider>
