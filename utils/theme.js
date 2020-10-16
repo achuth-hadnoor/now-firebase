@@ -77,8 +77,9 @@ const GlobalStyle = createGlobalStyle`
 const theme = {
     light: {
         background: {
-            primary: '#f8f8f8',
-            secondary: '#eee',
+            primary: '#fff',
+            secondary: '#fefefe',
+            ternary:'#f8f8f8',
             accent: '#f9f9f9'
         },
         colors: {
@@ -98,6 +99,7 @@ const theme = {
         background: {
             primary: '#121212',
             secondary: '#333',
+            ternary:'#2e2e2e',
             accent:'indigo'
         },
         colors: {
@@ -118,7 +120,7 @@ const theme = {
 export default function Theme({ children, darkmode}) {
     return (
         <>
-            <ThemeProvider theme={theme.dark}>
+            <ThemeProvider theme={theme.light}>
             <GlobalStyle />
                 {children}
             </ThemeProvider>

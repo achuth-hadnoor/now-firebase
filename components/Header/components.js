@@ -17,7 +17,7 @@ export const UserBubble = () => {
             BubbleIcon={
                 () => (
                     <img
-                        style={{height:30,width:30,borderRadius:25,cursor:'pointer'}}
+                        style={{height:30,width:30,borderRadius:25 }}
                         src={user?.photoUrl}
                     // signout={signOut}
                     />
@@ -26,8 +26,8 @@ export const UserBubble = () => {
 
             BubbleItem={
                 () =>
-                    <BubbleWrapper style={{right:0}}>
-                        <BubbleItem>
+                    <BubbleWrapper style={{right:0}} top={true}>
+                        <BubbleItem  tabIndex={0}>
                             <Avatar src={user.photoUrl} />
                             <div className="info">
                                 <p>{user.name}</p>
@@ -46,19 +46,19 @@ export const UserBubble = () => {
                                 }
                         `}</style>
                         </BubbleItem>
-                        <BubbleItem onClick={() => { alert('lol') }}>
+                        <BubbleItem onClick={() => { alert('lol') }} tabIndex={0}>
                             <Icon style={{ padding: '0px 3px' }} icon={settings} /> Settings
                     </BubbleItem>
-                        <BubbleItem >
+                        <BubbleItem  tabIndex={0}>
                             <Icon style={{ padding: '0px 3px ' }} icon={command} /> Keyboard Shortcuts
                     </BubbleItem>
-                        <BubbleItem >
+                        <BubbleItem  tabIndex={0}>
                             <Icon style={{ padding: '0px 3px ' }} icon={mail} /> Contact Us
                     </BubbleItem>
                         <BubbleItem onClick={signOut}>
                             <Icon style={{ padding: '0px 3px ' }} icon={power} />Logout
                     </BubbleItem>
-                        <BubbleItem>
+                        <BubbleItem tabIndex={0}>
                             <div className="info">
                                 <p>sample</p>
                                 <p>test</p>
@@ -80,7 +80,7 @@ export const NotiBubble = () => {
             BubbleItem={
                 () => (
                     <BubbleWrapper  style={{right:0}}>
-                        <BubbleItem style={{ textAlign: 'center' }}>
+                        <BubbleItem style={{ textAlign: 'center' }}  tabIndex={0}>
                             All Caught Up
                 </BubbleItem>
                     </BubbleWrapper>

@@ -1,20 +1,29 @@
 import { useState } from "react";
+import styled from "styled-components";
 
 export const Bubble = ({ BubbleIcon, BubbleItem }) => {
     const [open, setOpen] = useState(false);
     return (
-        <span 
-            style={{ margin: '0px 10px', outline: 'none'}} 
+        <BubbleWrapper  
             tabIndex={0}
-            onBlur={() => {
-                setOpen(false);
-            }} onClick={() => {
+            onClick={() => {
                 setOpen(!open);
             }}>
             <BubbleIcon />
             {
-                open && <BubbleItem />
+                open && <div 
+                            style={{position:'absolute',height:'100%',width:'100%',top:0,left:0}}  
+                            onClick={() => {
+                                setOpen(false);
+                            }} >
+                    <BubbleItem />
+                </div> 
             }
-        </span>
+        </BubbleWrapper>
     )
 }
+
+const BubbleWrapper = styled.span`
+    margin:0px 10px;
+    outline:none;
+`;

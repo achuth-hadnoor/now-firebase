@@ -6,14 +6,13 @@ export const HeaderWrapper = styled.header`
   } */
     align-items:center;
     display:flex;
-    margin:0px 10px ;
+    margin:10px ;
     font-size:18px; 
 `
 export const BubbleWrapper = styled.ul`
     list-style:none;
     position: absolute; 
-    background: #fff;
-    color:#444; 
+    background:${({theme})=>theme.background.secondary}; 
     box-shadow: 0px 0px 10px 5px rgba(0,0,0,.05);
     border-radius: 10px;
     opacity:0;
@@ -24,16 +23,18 @@ export const BubbleWrapper = styled.ul`
     width:250px;
     overflow:hidden; 
     z-index:999;
+    top:${({top})=> top ? '50px' : '0px' };
     `;
+
 export const BubbleItem = styled.li`
     align-items:center;
     cursor:pointer;
     padding: 10px;
     display:flex;
     &:hover{
-        background:${props => props.theme.colors.secondary}
+        background:${props => props.theme.background.ternary};
     }
-    border-bottom:1px solid #f1f1f1;
+    border-bottom:2px solid ${props => props.theme.background.ternary};
 `;
 export const Options = styled.div`
     display:flex;
