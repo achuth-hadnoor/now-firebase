@@ -1,31 +1,27 @@
-import { AuthProvider } from '@/lib/auth.js'
+
 import ThemeProvider from '@/utils/theme'
-import {Fuego,FuegoProvider} from '@nandorojo/swr-firestore'
 import Page from 'layouts/page'
-
-
-const firebaseConfig  = {
-    apiKey:process.env.NEXT_PUBLIC_FIREBASE_API_KEY ,
-    authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
-    databaseURL: process.env.NEXT_PUBLIC_DATABASEURL,
-    projectId: process.env.NEXT_PUBLIC_PROJECTID,
-    storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_MESSAGE_SENDER_ID,
-    appId:process.env.NEXT_PUBLIC_APP_ID,
-}
-
-const fuego = new Fuego(firebaseConfig)
+import FeugoWrapper from 'contexts/feugo'
+import { AuthProvider } from '@/lib/auth'
+import { Wrapper } from '@/components/styles'
 
 export default function App({ Component, pageProps }) {
   return (
-    <FuegoProvider  fuego={fuego}> 
-        <AuthProvider>
-            <ThemeProvider>
-                <Page>
-                    <Component {...pageProps} /> 
-                </Page>
-            </ThemeProvider>
+    <FeugoWrapper> 
+        <AuthProvider>   
+            <Component {...pageProps} />  
         </AuthProvider>
-    </FuegoProvider>
+    </FeugoWrapper>
   )
 }
+
+/*
+    - firebaseWrapper
+        - authwrapper
+            -   themeWrapper
+        -slateWrapper
+            - Header
+            - sections
+                -blocks
+
+*/ 

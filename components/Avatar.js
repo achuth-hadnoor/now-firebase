@@ -6,7 +6,7 @@ const Avatar = (props)=>(
             props.src ?
             <div
                 style={{outline:'none'}}
-               {...props}
+                onClick={props.signout}
             >
                 <Img src={props.src} 
                    title={props.name} 
@@ -14,7 +14,7 @@ const Avatar = (props)=>(
                    /> 
             </div>
             : <div  
-               {...props}
+               onClick={props.signout}
                   style={{ cursor:'pointer'}}>{props.name?.substring(1,2)}</div>
         }
     </>
