@@ -8,10 +8,11 @@ import { BubbleItem, BubbleWrapper } from "../Header/elements";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import ContentEditable from "react-contenteditable";
-import Block  from "../Block";
+import Block from "../Block";
 
 export default function Slate() {
-    const cntRef = React.createRef(); 
+    const cntRef = React.createRef();
+
     const [slateVal, setSlateVal] = useState('');
 
     const auth = useAuth();
@@ -22,7 +23,7 @@ export default function Slate() {
             setSlateVal(slate.name);
             cntRef.current.focus()
         }
-    }, [slate, slateVal,cntRef])
+    }, [slate, slateVal, cntRef])
 
     if (loading) {
         return (
@@ -35,30 +36,27 @@ export default function Slate() {
     }
 
     return (
-        <div style={{ flex: 1, margin: '0px 10px' }}>
-            {
-                loading ? null : <>
-                    <Icon icon={chevronsUp} /> 
-                    <SlateInput 
-                        innerRef={cntRef}
-                        html={slateVal} // innerHTML of the editable div
-                        disabled={false}       // use true to disable editing
-                        onChange={(e) => {
-                            if(e.target.value === ''){
-                                return setSlateVal('Enter Stale Name');
-                            }
-                            setSlateVal(e.target.value);
-                        }}
-                        tagName='span' // Use a custom HTML tag (uses a div by default)
-                    />
-                    <Bubble
-                        BubbleIcon={() => <Icon icon={moreHorizontal} />}
-                        BubbleItem={() => <BubbleWrapper><BubbleItem>yo</BubbleItem></BubbleWrapper>}
-                    />
-                    <Icon icon={share2} />
-                    <Block slate={slate.id}/>
-                </>
-            }
+        <div style={{ flex: 1, margin: '0px 10px' ,textAlign:'center'}}>
+            <Icon icon={chevronsUp} />
+            <SlateInput
+                innerRef={cntRef}
+                html={slateVal} // innerHTML of the editable div
+                disabled={false}       // use true to disable editing
+                onChange={(e) => {
+                    if (e.target.value === '') {
+                        return setSlateVal('Enter Stale Name');
+                    }
+                    setSlateVal(e.target.value);
+                }}
+                tagName='span' // Use a custom HTML tag (uses a div by default)
+            />
+            <Bubble
+                BubbleIcon={() => <Icon icon={moreHorizontal} />}
+                BubbleItem={() => <BubbleWrapper><BubbleItem>yo</BubbleItem></BubbleWrapper>}
+            />
+            <Icon icon={share2} />
+            <Block slate={slate.id} />
+
         </div>
     )
 }

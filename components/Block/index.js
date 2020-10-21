@@ -11,7 +11,12 @@ const Block = ({ slate }) => {
     }
     console.log(data);
     return (
-        <div style={{display:'flex'}}>
+        <div 
+            style={{
+                display:'flex',
+                boxShadow:'0px 0px 10px 0px rgba(0,0,0,.2)',
+                margin:'5px'
+        }}>
         {
             data.map((d,i)=><Editor blockId={d.id} key={d.id} index={d.id}/>)
         }

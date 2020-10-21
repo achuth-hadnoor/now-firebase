@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import MarkdownEditor from "rich-markdown-editor";
-import { useDocument } from "@nandorojo/swr-firestore";
-
+import MarkdownEditor  from "rich-markdown-editor";
+import { useDocument } from "@nandorojo/swr-firestore"; 
+// import {dark} from '../../utils/theme'
 
 const Editor = ({ blockId }) => {
     const { data: block, error, loading } = useDocument(`blocks/${blockId}`)
@@ -20,12 +20,13 @@ const Editor = ({ blockId }) => {
 
     else {
         return (
-            <span style={{height:250,width:300,margin:'auto',maxWidth:400}}>
+            <span style={{height:250,width:300,margin:5,maxWidth:400}}>
                 <MarkdownEditor
                     defaultValue={block.content}
                     onChange={(getValue) => {
                         setValue(getValue());
                     }}
+                    // theme={light}
                 />
             </span>
         );
