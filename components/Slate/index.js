@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import ContentEditable from "react-contenteditable";
 import Block from "../Block";
+import { updateSlate } from "@/lib/db";
 
 export default function Slate() {
     const cntRef = React.createRef();
@@ -18,12 +19,31 @@ export default function Slate() {
     const auth = useAuth();
     const { data: slate, error, loading, update } = useDocument(`slate/` + auth.user.slate, { listen: true });
 
+    const saveSlate = () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+            let text = cntRef.current.textContent;
+            if (text === '') {
+                return setSlateVal('Enter Stale Name');
+            }
+            setSlateVal(text);
+            console.log(text);
+            slate.name = text;
+            updateSlate(slate.id, slate);
+        }, 1000);
+    }
+
     useEffect(() => {
         if (slate !== undefined && slateVal === '') {
             setSlateVal(slate.name);
-            cntRef.current.focus()
+            cntRef.current.focus();
         }
     }, [slate, slateVal, cntRef])
+
+
+    let timeout = null;
+
+
 
     if (loading) {
         return (
@@ -36,19 +56,14 @@ export default function Slate() {
     }
 
     return (
-        <div style={{ flex: 1, margin: '0px 10px' ,textAlign:'center'}}>
+        <div style={{ flex: 1, margin: '0px 10px', textAlign: 'center' }}>
             <Icon icon={chevronsUp} />
             <SlateInput
                 innerRef={cntRef}
                 html={slateVal} // innerHTML of the editable div
-                disabled={false}       // use true to disable editing
-                onChange={(e) => {
-                    if (e.target.value === '') {
-                        return setSlateVal('Enter Stale Name');
-                    }
-                    setSlateVal(e.target.value);
-                }}
+                disabled={false}  
                 tagName='span' // Use a custom HTML tag (uses a div by default)
+                onKeyUp={saveSlate}
             />
             <Bubble
                 BubbleIcon={() => <Icon icon={moreHorizontal} />}

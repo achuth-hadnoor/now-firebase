@@ -3,8 +3,9 @@ import { useAuth } from "@/lib/auth";
 import { fuego, useDocument } from "@nandorojo/swr-firestore"
 import Router from 'next/router';
 import { useEffect, useState } from "react";
+import Slate from '@/components/Slate';
 
-const Slate = ({ id }) => {
+const SlateData = ({ id }) => {
     const [slate, setSlate] = useState('')
     const { signout } = useAuth();
 
@@ -28,12 +29,13 @@ const Slate = ({ id }) => {
     return (
         <>
             <Header />
+            <Slate />
             <input value={slate} onChange={(e) => { setSlate(e.target.value) }} />
             <button onClick={() => { signout() }}>Sign Out</button>
         </>
     )
 }
-Slate.getInitialProps = (ctx) => {
+SlateData.getInitialProps = (ctx) => {
     const { query } = ctx;
     return {
         id: query.id
@@ -41,4 +43,4 @@ Slate.getInitialProps = (ctx) => {
 }
 
 
-export default Slate;
+export default SlateData;
