@@ -19,6 +19,8 @@ export default function Slate() {
     const auth = useAuth();
     const { data: slate, error, loading, update } = useDocument(`slate/` + auth.user.slate, { listen: true });
 
+    let timeout = null;
+
     const saveSlate = () => {
         clearTimeout(timeout);
         timeout = setTimeout(function () {
@@ -39,11 +41,6 @@ export default function Slate() {
             cntRef.current.focus();
         }
     }, [slate, slateVal, cntRef])
-
-
-    let timeout = null;
-
-
 
     if (loading) {
         return (
