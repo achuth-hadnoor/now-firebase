@@ -1,5 +1,5 @@
 import { useAuth } from "@/lib/auth";
-import { useDocument } from "@nandorojo/swr-firestore";
+import { useDocument, useCollection } from "@nandorojo/swr-firestore";
 
 import { IconValue as Icon } from '@/components/styles'
 import { share2, chevronsUp, moreHorizontal } from "react-icons-kit/feather";
@@ -10,11 +10,16 @@ import styled from "styled-components";
 import ContentEditable from "react-contenteditable";
 import Block from "../Block";
 import { updateSlate } from "@/lib/db";
+import CustomModal from "@/components/CustomModal";
+import { theme } from "rich-markdown-editor";
+import CustomLink from '@/components/Link';
+import Router from "next/router";
 
 export default function Slate() {
     const cntRef = React.createRef();
 
     const [slateVal, setSlateVal] = useState('');
+    const [slatesModalOpen, setSlatesModalOpen] = useState(false);
 
     const auth = useAuth();
     const { data: slate, error, loading, update } = useDocument(`slate/` + auth.user.slate, { listen: true });
@@ -36,7 +41,7 @@ export default function Slate() {
     }
 
     useEffect(() => {
-        if (slate !== undefined && slateVal === '') {
+        if (slate !== undefined && slate.exists) {
             setSlateVal(slate.name);
             cntRef.current.focus();
         }
@@ -54,11 +59,12 @@ export default function Slate() {
 
     return (
         <div style={{ flex: 1, margin: '0px 10px', textAlign: 'center' }}>
-            <Icon icon={chevronsUp} />
+            <Slates isOpen={slatesModalOpen} closeModal={() => setSlatesModalOpen(!slatesModalOpen)} />
+            <Icon icon={chevronsUp} onClick={() => setSlatesModalOpen(!slatesModalOpen)} />
             <SlateInput
                 innerRef={cntRef}
                 html={slateVal} // innerHTML of the editable div
-                disabled={false}  
+                disabled={false}
                 tagName='span' // Use a custom HTML tag (uses a div by default)
                 onKeyUp={saveSlate}
             />
@@ -79,4 +85,49 @@ const SlateInput = styled(ContentEditable)`
     border:none;
     outline:none;
     flex-grow:1
+`;
+
+
+export const Slates = ({ isOpen, closeModal }) => {
+    const auth = useAuth();
+    const { data } = useCollection('slate', {
+        listen: true,
+        where: ['uid', '==', auth.user.uid]
+    });
+
+    const onClick = async (id) => {
+        auth.user.slate  = id; 
+        await auth.updateUser(auth.user);
+        closeModal(!isOpen);
+    }
+
+    return (
+        <CustomModal isOpen={isOpen} closeModal={closeModal}>
+            <ModalWrapper>
+                {data && data.map((t, i) => {
+                    return (
+                        <ModalItem onClick={() => onClick(t.id)}>
+                            {t.name}
+                        </ModalItem>
+                    )
+                })}
+            </ModalWrapper>
+        </CustomModal>
+    )
+}
+
+const ModalWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    width: 100%;
+    background: ${({theme})=>theme.background.primary};
+`;
+
+const ModalItem = styled.div`
+    margin: 10px 0px;
+    font-size: 16px;
+    padding: 2px 5px;
+    border-bottom: 1px groove ${({theme})=>theme.colors.primary};
+    cursor: pointer;
 `;

@@ -8,13 +8,13 @@ import Slate from '@/components/Slate';
 const SlateData = ({ id }) => {
     const [slate, setSlate] = useState('')
     const { signout } = useAuth();
-
     const { data, error, update } = useDocument(`slate/${id}`);
+    debugger;
 
 
     useEffect(() => {
         if (data) {
-            if (data.exists && slate === '') {
+            if (data.exists) {
                 setSlate(data.name);
             } else {
                 if (!data.exists) {
