@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import Modal from 'react-modal';
+import { theme } from 'rich-markdown-editor';
+
+Modal.defaultStyles.overlay.background='rgba(229, 229, 229, 0.6)';
 
 export const Container = styled(Modal)`
     display: flex;
@@ -7,7 +10,6 @@ export const Container = styled(Modal)`
     align-items: center;
     height: 100%;
     width: 100%;
-    backdrop-filter: blur(1px);
 `;
 
 export const Inner = styled.div`
@@ -21,6 +23,7 @@ export const Header = styled.div`
     align-items: center;
     justify-content: space-between;
     margin: 10px;
+    font-size: ${({ theme }) => theme.font.xxx};
 `;
 
 export const Body = styled.div`

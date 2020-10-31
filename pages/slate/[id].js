@@ -9,8 +9,6 @@ const SlateData = ({ id }) => {
     const [slate, setSlate] = useState('')
     const { signout } = useAuth();
     const { data, error, update } = useDocument(`slate/${id}`);
-    debugger;
-
 
     useEffect(() => {
         if (data) {
