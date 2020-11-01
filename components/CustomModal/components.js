@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Modal from 'react-modal';
 import { theme } from 'rich-markdown-editor';
 
-Modal.defaultStyles.overlay.background='rgba(229, 229, 229, 0.6)';
+Modal.defaultStyles.overlay.background='rgba(0,0,0,.5)';
 
 export const Container = styled(Modal)`
     display: flex;
@@ -29,5 +29,7 @@ export const Header = styled.div`
 export const Body = styled.div`
     display: flex;
     margin: 10px;
+    background: rgba(229, 229, 229, 0.6);
+    border-radius: 5px;
     
 `;

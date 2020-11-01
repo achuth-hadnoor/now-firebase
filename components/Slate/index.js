@@ -121,7 +121,6 @@ const ModalWrapper = styled.div`
     flex-direction: column;
     border-radius: 5px;
     width: 100%;
-    background: ${({theme})=>theme.background.primary};
 `;
 
 const ModalItem = styled.div`
